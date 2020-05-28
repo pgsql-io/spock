@@ -1,6 +1,6 @@
-# pglogical 2
+# spock
 
-The pglogical 2 extension provides logical streaming replication for PostgreSQL,
+The spock/pglogical extension provides logical streaming replication for PostgreSQL,
 using a publish/subscribe model. It is based on technology developed as part
 of the BDR project (http://2ndquadrant.com/BDR).
 
@@ -9,11 +9,6 @@ reused from the earlier Slony technology:
 * Nodes - PostgreSQL database instances
 * Providers and Subscribers - roles taken by Nodes
 * Replication Set - a collection of tables
-
-pglogical is utilising the latest in-core features, so we have these version restrictions:
-* Provider & subscriber nodes must run PostgreSQL 9.4+
-* PostgreSQL 9.5+ is required for replication origin filtering and conflict detection
-* Additionally, subscriber can be Postgres-XL 9.5+
 
 Use cases supported are:
 * Upgrades between major versions (given the above restrictions)
@@ -35,7 +30,7 @@ Architectural details:
 
 ## Requirements
 
-To use pglogical the provider and subscriber must be running PostgreSQL 9.4 or newer.
+To use pglogical the provider and subscriber must be running PostgreSQL 9.6 or newer.
 
 The `pglogical` extension must be installed on both provider and subscriber.
 You must `CREATE EXTENSION pglogical` on both.
@@ -52,104 +47,6 @@ Tables must have the same `PRIMARY KEY`s. It is not recommended to add additiona
 
 Some additional requirements are covered in "Limitations and Restrictions", below.
 
-## Installation
-
-### Packages
-
-pglogical is available as RPMs via yum for Fedora, CentOS, & RHEL, and as DEBs
-via apt for Debian and Ubuntu, or as source code here. Please see below for
-instructions on installing from source.
-
-#### Installing pglogical with YUM
-
-The instructions below are valid for Red Hat family of operating systems (RHEL, CentOS, Fedora).
-Pre-Requisites
-
-##### Pre-requisites
-
-These RPMs all require the PGDG PostgreSQL releases from http://yum.postgresql.org/.
-You cannot use them with stock PostgreSQL releases included in Fedora and RHEL.
-If you don’t have PostgreSQL already:
-
- - Install the appropriate PGDG repo rpm from http://yum.postgresql.org/repopackages.php
- - Install PostgreSQL
-    - PostgreSQL 9.4: `yum install postgresql94-server postgresql94-contrib`
-    - PostgreSQL 9.5: `yum install postgresql95-server postgresql95-contrib`
-    - PostgreSQL 9.6: `yum install postgresql96-server postgresql96-contrib`
-    - PostgreSQL 10: `yum install postgresql10-server postgresql10-contrib`
-    - PostgreSQL 11: `yum install postgresql11-server postgresql11-contrib`
-    - PostgreSQL 12: `yum install postgresql12-server postgresql12-contrib`
-
-Then install the “2ndQuadrant’s General Public” repository for your PostgreSQL
-version, by running the following instructions as root on the destination Linux server:
-
- - PostgreSQL 9.4: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/9.4/rpm | bash`
- - PostgreSQL 9.5: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/9.5/rpm | bash`
- - PostgreSQL 9.6: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/9.6/rpm | bash`
- - PostgreSQL 10: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/10/rpm | bash`
- - PostgreSQL 11: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/11/rpm | bash`
- - PostgreSQL 12: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/12/rpm | bash`
-
-##### Installation
-
-Once the repository is installed, you can proceed to pglogical for your PostgreSQL version:
-
- - PostgreSQL 9.4: `yum install postgresql94-pglogical`
- - PostgreSQL 9.5: `yum install postgresql95-pglogical`
- - PostgreSQL 9.6: `yum install postgresql96-pglogical`
- - PostgreSQL 10: `yum install postgresql10-pglogical`
- - PostgreSQL 11: `yum install postgresql11-pglogical`
- - PostgreSQL 12: `yum install postgresql12-pglogical`
-
-You may be prompted to accept the repository GPG key for package signing:
-
-    Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-2NDQ-DL-DEFAULT Importing GPG key 0xD6BAF0C3: Userid : "Public repository signing key 2ndQuadrant <ci@2ndquadrant.com>" Fingerprint: 8565 305c ea7d 0b66 4933 d250 9904 cd4b d6ba f0c3 From : /etc/pki/rpm-gpg/RPM-GPG-KEY-2NDQ-DL-DEFAULT Is this ok [y/N]:
-
-If so, accept the key (if it matches the above) by pressing ‘y’ then enter.
-(It’s signed by the 2ndQuadrant master packaging key, if you want to verify that.)
-
-#### Installing pglogical with APT
-
-The instructions below are valid for Debian and all Linux flavors based on
-Debian (e.g. Ubuntu).
-
-##### Pre-requisites
-
-You can install the “2ndQuadrant’s General Public” repository by running the
-following instructions as root on the destination Linux server: `curl https://access.2ndquadrant.com/api/repository/dl/default/release/deb | bash`
-
- - Add the http://apt.postgresql.org/ repository. See the site for instructions.
-
-##### Installation
-
-Once pre-requisites are complete, installing pglogical is simply a matter of executing the following for your version of PostgreSQL:
-
- - PostgreSQL 9.4: `sudo apt-get install postgresql-9.4-pglogical`
- - PostgreSQL 9.5: `sudo apt-get install postgresql-9.5-pglogical`
- - PostgreSQL 9.6: `sudo apt-get install postgresql-9.6-pglogical`
- - PostgreSQL 10: `sudo apt-get install postgresql-10-pglogical`
- - PostgreSQL 11: `sudo apt-get install postgresql-11-pglogical`
- - PostgreSQL 12: `sudo apt-get install postgresql-12-pglogical`
-
-### From source code
-
-Source code installs are the same as for any other PostgreSQL extension built
-using PGXS.
-
-Make sure the directory containing `pg_config` from the PostgreSQL release is
-listed in your `PATH` environment variable. You might have to install a `-dev`
-or `-devel` package for your PostgreSQL release from your package manager if
-you don't have `pg_config`.
-
-Then run `make` to compile, and `make install` to
-install. You might need to use `sudo` for the install step.
-
-e.g. for a typical Fedora or RHEL 7 install, assuming you're using the
-[yum.postgresql.org](http://yum.postgresql.org) packages for PostgreSQL:
-
-    sudo dnf install postgresql95-devel
-    PATH=/usr/pgsql-9.5/bin:$PATH make clean all
-    sudo PATH=/usr/pgsql-9.5/bin:$PATH make install
 
 ## Usage
 
@@ -908,38 +805,6 @@ encoding. We recommend using `UTF-8` encoding in all replicated databases.
 PostgreSQL's logical decoding facility does not support decoding changes
 to large objects, so pglogical cannot replicate large objects.
 
-### Postgres-XL
-
-Minimum supported version of Postgres-XL is 9.5r1.5.
-
-Postgres-XL is only supported as subscriber (cannot be a provider). For
-workloads with many small transactions the performance of replication may
-suffer due to increased write latency. On the other hand large insert
-(or bulkcopy) transactions are heavily optimized to work very fast with
-Postgres-XL.
-
-Also any DDL limitations apply so extra care need to be taken when using
-`replicate_ddl_command()`.
-
-Postgres-XL changes defaults and available settings for
-`pglogical.conflict_resolution` and `pglogical.use_spi` configuration options.
-
-### BDR
-
-`pglogical` does not currently interoperate well with BDR. BDR nodes will not
-forward writes made by pglogical subscribers. And pglogical providers will not
-decode and send writes made on other BDR nodes to the pglogical subscriber.
-
-This restriction may be lifted at a later time.
-
-## Credits and License
-
-pglogical has been designed, developed and tested by the 2ndQuadrant team
-* Petr Jelinek
-* Craig Ringer
-* Simon Riggs
-* Pallavi Sontakke
-* Umair Shahid
 
 pglogical license is The PostgreSQL License
 
