@@ -2,7 +2,7 @@
 
 The spock/pglogical extension provides logical streaming replication for PostgreSQL,
 using a publish/subscribe model. It is based on technology developed as part
-of the BDR project (http://2ndquadrant.com/BDR).
+of the BDR project (https://github.com/2ndquadrant/BDR).
 
 We use the following terms to describe data streams between nodes, deliberately
 reused from the earlier Slony technology:
@@ -64,8 +64,7 @@ decoding:
     max_wal_senders = 10        # one per node needed on provider node
     shared_preload_libraries = 'pglogical'
 
-If you are using PostgreSQL 9.5+ (this won't work on 9.4) and want to handle
-conflict resolution with last/first update wins (see [Conflicts](#conflicts)),
+If you want to handle conflict resolution (see [Conflicts](#conflicts)),
 you can add this additional option to postgresql.conf:
 
     track_commit_timestamp = on # needed for last/first update wins conflict resolution
@@ -76,11 +75,6 @@ you can add this additional option to postgresql.conf:
 Next the `pglogical` extension has to be installed on all nodes:
 
     CREATE EXTENSION pglogical;
-
-If using PostgreSQL 9.4, then the `pglogical_origin` extension
-also has to be installed on that node:
-
-    CREATE EXTENSION pglogical_origin;
 
 Now create the provider node:
 
