@@ -1,6 +1,6 @@
 # Frequently Asked Questions
 
-pglogical 2.0 introduces some new features, like column filter, row filter and apply
+spock/pglogical introduces some new features, like column filter, row filter and apply
 delay. Some related discussion on them:
 
 ### The column filter

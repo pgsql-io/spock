@@ -2,20 +2,11 @@
 
 MODULE_big = pglogical
 EXTENSION = pglogical
-PGFILEDESC = "pglogical - logical replication"
+PGFILEDESC = "spock - logical replication"
 
 MODULES = pglogical_output
 
-DATA = pglogical--1.0.0.sql pglogical--1.0.0--1.0.1.sql \
-	   pglogical--1.0.1--1.1.0.sql \
-	   pglogical--1.1.0--1.1.1.sql pglogical--1.1.1--1.1.2.sql \
-	   pglogical--1.1.2--1.2.0.sql \
-	   pglogical--1.2.0--1.2.1.sql pglogical--1.2.1--1.2.2.sql \
-	   pglogical--1.2.2--2.0.0.sql \
-	   pglogical--2.0.0--2.0.1.sql \
-	   pglogical--2.0.0--2.1.0.sql pglogical--2.0.1--2.1.0.sql \
-	   pglogical--2.1.0--2.1.1.sql pglogical--2.1.1--2.2.0.sql \
-	   pglogical--2.2.0.sql \
+DATA = pglogical--2.2.0.sql \
 	   pglogical--2.2.0--2.2.1.sql pglogical--2.2.1.sql \
 	   pglogical--2.2.1--2.2.2.sql pglogical--2.2.2.sql \
 	   pglogical--2.2.2--2.3.0.sql \
@@ -42,8 +33,7 @@ REGRESS = preseed infofuncs init_fail init preseed_check basic extended conflict
 		  row_filter_sampling att_list column_filter apply_delay multiple_upstreams \
 		  node_origin_cascade drop
 
-EXTRA_CLEAN += compat94/pglogical_compat.o compat95/pglogical_compat.o \
-			   compat96/pglogical_compat.o compat10/pglogical_compat.o \
+EXTRA_CLEAN += compat96/pglogical_compat.o compat10/pglogical_compat.o \
 			   pglogical_create_subscriber.o
 
 # The # in #define is taken as a comment, per https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=142043
