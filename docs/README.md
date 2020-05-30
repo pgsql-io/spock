@@ -1,10 +1,7 @@
 # spock
 
-The spock/pglogical extension provides logical streaming replication for PostgreSQL,
-using a publish/subscribe model. It is based on technology developed as part
-of the BDR project (https://github.com/2ndquadrant/BDR).
-
-We use the following terms to describe data streams between nodes, deliberately
+The spock-pglogical extension provides logical streaming replication for PostgreSQL,
+using a publish/subscribe model. The following terms describe data streams between nodes, deliberately
 reused from the earlier Slony technology:
 * Nodes - PostgreSQL database instances
 * Providers and Subscribers - roles taken by Nodes
@@ -30,7 +27,7 @@ Architectural details:
 
 ## Requirements
 
-To use pglogical the provider and subscriber must be running PostgreSQL 9.6 or newer.
+To use spock-pglogical the provider and subscriber must be running PostgreSQL 9.6 or newer.
 
 The `pglogical` extension must be installed on both provider and subscriber.
 You must `CREATE EXTENSION pglogical` on both.
@@ -68,7 +65,6 @@ If you want to handle conflict resolution (see [Conflicts](#conflicts)),
 you can add this additional option to postgresql.conf:
 
     track_commit_timestamp = on # needed for last/first update wins conflict resolution
-                                # property available in PostgreSQL 9.5+
 
 `pg_hba.conf` has to allow replication connections from localhost.
 
@@ -594,8 +590,6 @@ can be either set in `postgresql.conf` or via `ALTER SYSTEM SET`.
   `track_commit_timestamp` is not available in PostgreSQL 9.4
   `pglogical.conflict_resolution` can only be `apply_remote` or `error`.
 
-  In Postgres-XL, the only supported value and the default is `error`.
-
 - `pglogical.conflict_log_level`
   Sets the log level for reporting detected conflicts when the
   `pglogical.conflict_resolution` is set to anything else than `error`.
@@ -628,14 +622,12 @@ can be either set in `postgresql.conf` or via `ALTER SYSTEM SET`.
   (`INSERT`, `UPDATE`, `DELETE`) statements to apply incoming changes instead
   of using internal low level interface.
 
-  This is mainly useful for Postgres-XL and debugging purposes.
+  This is mainly useful for debugging purposes.
 
   The default in PostgreSQL is `false`.
 
   This can be set to `true` only when `pglogical.conflict_resolution` is set to `error`.
 In this state, conflicts are not detected.
-
-  In Postgres-XL the default and only allowed setting is `true`.
 
 - `pglogical.temp_directory`
   Defines system path where to put temporary files needed for schema
