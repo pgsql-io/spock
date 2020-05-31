@@ -8,6 +8,7 @@ reused from the earlier Slony technology:
 * Replication Set - a collection of tables
 
 Use cases supported are:
+* Bi-directional updates with configurable conflict resolution
 * Upgrades between major versions (given the above restrictions)
 * Full database replication
 * Selective replication of sets of tables using replication sets
@@ -586,9 +587,7 @@ can be either set in `postgresql.conf` or via `ALTER SYSTEM SET`.
   The default value in PostgreSQL is `apply_remote`.
 
   The `keep_local`, `last_update_wins` and `first_update_wins` settings
-  require `track_commit_timestamp` PostgreSQL setting to be enabled. As
-  `track_commit_timestamp` is not available in PostgreSQL 9.4
-  `pglogical.conflict_resolution` can only be `apply_remote` or `error`.
+  require `track_commit_timestamp` PostgreSQL setting to be enabled.
 
 - `pglogical.conflict_log_level`
   Sets the log level for reporting detected conflicts when the
