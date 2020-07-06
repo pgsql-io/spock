@@ -13,7 +13,9 @@ DATA = pglogical--2.2.0.sql \
 	   pglogical--2.2.2--2.3.1.sql \
 	   pglogical--2.3.0.sql \
 	   pglogical--2.3.0--2.3.1.sql \
-	   pglogical--2.3.1.sql
+	   pglogical--2.3.1.sql \
+	   pglogical--2.3.1--2.3.2.sql \
+	   pglogical--2.3.2.sql
 
 OBJS = pglogical_apply.o pglogical_conflict.o pglogical_manager.o \
 	   pglogical.o pglogical_node.o pglogical_relcache.o \
